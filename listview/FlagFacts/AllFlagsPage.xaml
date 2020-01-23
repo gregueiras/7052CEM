@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Fun with All Flags"
+    x:Class="FlagFacts.AllFlagsPage">
+
+    <ListView
+        ItemsSource="{Binding Flags }"
+        SelectedItem="{Binding CurrentFlag, Mode=TwoWay}"
+        ItemTapped="ListView_ItemTapped">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ImageCell
+                    Text="{Binding Country}"
+                    ImageSource="{Binding ImageUrl, Converter={StaticResource irConverter}}"
+                    Detail="{Binding DateAdopted, StringFormat='Adopted on {0:d}'}"
+                    DetailColor="Accent"
+                />
+            </DataTemplate>
+        </ListView.ItemTemplate>
+
+    </ListView>
+
+</ContentPage>
