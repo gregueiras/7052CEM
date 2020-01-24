@@ -4,7 +4,7 @@ using System.Text;
 namespace People.Test
 {
     [TestClass]
-    public class UnitTest1
+    public class CryptoTest
     {
         [TestMethod]
         public void EncryptAndDecrypt()
