@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using People.Models;
 using SQLite;
+using Xamarin.Essentials;
 
 namespace People
 {
@@ -18,7 +19,7 @@ namespace People
             conn.CreateTableAsync<Person>();
         }
 
-        public async void AddNewPerson(string name)
+        public async Task AddNewPerson(string name)
         {
             int result = 0;
             try
@@ -28,10 +29,13 @@ namespace People
                     throw new Exception("Valid name required");
 
                 // TODO: insert a new person into the Person table
-                Person person = new Person() { Name = name };
-                result = await conn.InsertAsync(person);
+                string password = await SecureStorage.GetAsync(App.PASSWORD_KEY);
+                string encryptedName = CryptoHelper.Encrypt(name, password);
+                Person person = new Person() { Name = encryptedName };
+                    result = await conn.InsertAsync(person);
 
-                StatusMessage = string.Format("{0} record(s) added [Name: {1})", result, name);
+                StatusMessage = string.Format("{0} record(s) added [Name: {1}])", result, name);
+                result++;
             }
             catch (Exception ex)
             {
@@ -45,7 +49,19 @@ namespace People
             // TODO: return a list of people saved to the Person table in the database
             try
             {
-                return await conn.Table<Person>().ToListAsync();
+                string password = await SecureStorage.GetAsync(App.PASSWORD_KEY);
+                var people = await conn.Table<Person>().ToListAsync();
+                List<Person> ret = people.ConvertAll((person) =>
+                {
+                    Person newPerson = new Person()
+                    {
+                        Name = CryptoHelper.Decrypt(person.Name, password)
+                    };
+
+                    return newPerson;
+                });
+
+                return ret;
             }
             catch (Exception ex)
             {

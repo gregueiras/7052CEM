@@ -1,8 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-
+using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace People
@@ -11,6 +10,7 @@ namespace People
     {
         string dbPath => FileAccessHelper.GetLocalFilePath("people.db3");
         public static PersonRepository PersonRepo;
+        public static readonly string PASSWORD_KEY = "crypto_password";
 
         public App()
         {
@@ -19,9 +19,19 @@ namespace People
             MainPage = new People.MainPage();
         }
 
-        protected override void OnStart()
+        private async Task generateSecurePassword()
         {
-            // Handle when your app starts
+            string password = await SecureStorage.GetAsync(PASSWORD_KEY);
+            if (password is null)
+            {
+                password = Encoding.ASCII.GetString(CryptoHelper.Generate256BitsOfRandomEntropy());
+                await SecureStorage.SetAsync(PASSWORD_KEY, password);
+            }
+        }
+
+        protected override async void OnStart()
+        {
+            await generateSecurePassword();
         }
 
         protected override void OnSleep()

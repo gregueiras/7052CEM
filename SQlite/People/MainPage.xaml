@@ -25,7 +25,7 @@
             Clicked="OnNewButtonClicked" />
 
         <Label x:Name="statusMessage"
-               Text="{Binding statusMessage}"
+               Text="HEY"
            Grid.Row="2" />
 
         <Button Text="Get All People"
