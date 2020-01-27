@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:local="clr-namespace:MockBlanck"
+    mc:Ignorable="d"
+             x:Class="MockBlanck.VehiclesPage"
+ >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:vehicleConverter
+                x:Key="vehicleConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <Picker
+                x:Name="selectVehicles"
+                Title="Select your vehicle"
+                SelectedIndexChanged="OnPickerSelectedIndexChanged"/>
+            <StackLayout
+                Orientation="Horizontal">
+                <Entry
+                    x:Name="entry"
+                    Placeholder="New Vehicle Name"
+                    HorizontalOptions="FillAndExpand" />
+                <Button
+                    Clicked="Button_Clicked"
+                    Text="Add" />
+            </StackLayout>
+            <StackLayout
+                Orientation="Vertical">
+                <StackLayout
+                    Orientation="Horizontal">
+                    <Entry
+                        Placeholder="Fuel" x:Name="fuelEntry" HorizontalOptions="FillAndExpand"/>
+                    <Entry
+                        Placeholder="Miles"
+                        x:Name="milesEntry"
+                        HorizontalOptions="FillAndExpand" />
+                    <Button
+                        Text="+ Fuel"
+                        Clicked="AddFuel" />
+                </StackLayout>
+                <StackLayout
+                    Orientation="Horizontal">
+                    <Entry
+                        Placeholder="Value"
+                        x:Name="serviceEntry"
+                        HorizontalOptions="FillAndExpand"/>
+                    <Button
+                        Text="+ Service"
+                        Clicked="AddService" />
+                </StackLayout>
+                <StackLayout
+                    Orientation="Horizontal">
+                    <StackLayout
+                        Orientation="Vertical">
+                        <StackLayout
+                            Orientation="Horizontal"
+                            HorizontalOptions="FillAndExpand">
+                            <Label
+                                Text="Average Fuel per Mile:" />
+                            <Label
+                                x:Name="averageFM" />
+                        </StackLayout>
+                        <StackLayout
+                            Orientation="Horizontal">
+                            <ListView
+                                x:Name="fuelExpensesList">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextCell
+                                            Text="{Binding price, StringFormat='{}Price: {0}'}"
+                                            Detail="{Binding miles, StringFormat='{}Miles: {0}'}" />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                            <ListView
+                                x:Name="servicesExpensesList">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextCell
+                                            Text="{Binding price, StringFormat='{}Service cost: {0}'}" />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

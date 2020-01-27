@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    x:Class="MockBlanck.TasksPage">
+   
+    <ContentPage.Content>
+        <StackLayout>
+            <Label
+                x:Name="label"
+                Text="Insert new task"/>
+            <StackLayout Orientation="Horizontal">
+                <Entry
+                    x:Name="entry"
+                    HorizontalOptions="FillAndExpand"/>
+                <Button Clicked="Button_Clicked" Text="Add"/>
+            </StackLayout>
+                <ListView
+                    x:Name="list">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell
+                                Text="{Binding task}" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
